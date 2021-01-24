@@ -2,11 +2,11 @@
 # :sparkles: Welcome to my repository :sparkles:
 
 #### This repository will store all of my projects for the _programming_ _with_ _data_ class with Dr. Wiernik
-Each change made to my projects can also be seen here
 There are two branches you can travel to and easily switch between in this [repository](https://github.com/usf-progdata/hw-antoniettaa) 
 * *Master* branch which stores _all_ projects
 * *Homework* branch which stores _homeworks_ 
 
+Every change made to my projects can be seen in the file's _history_ on the *top left*
 
 # *Myself*
 ## My name is Antonietta and I...
