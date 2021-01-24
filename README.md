@@ -7,7 +7,7 @@ This is template repository for hosting and posting your homework assignments fo
 ###<This repository will store all of my projects for _programming_ _with_ _data_>
 ###<Each change made to my projects can also be seen here>
 
-#<*Myself*>
+*#Myself*
 ##<My name is Antonietta and I...>
 1. Am 21 years old
 2. from Venezuela ![venezuela](https://www.qubicaamf.com/QubicaAMF/files/c1/c1c750e6-639d-465b-ac84-13ec7b0f25c3.jpg)
