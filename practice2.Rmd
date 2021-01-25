@@ -18,7 +18,8 @@ On this project I will be exploring _palmerpenguins_ dataset. We will focus on e
 
 We will begin by exploring the general summary of the dataset. 
 
-```{r} 
+```{r summary} 
+
 library(palmerpenguins)
 
 summary(penguins)
@@ -40,7 +41,7 @@ We can see that the penguin's *body mass* _mean_ was 4202 grams, with the lowest
 On this section we will explore the body mass of the penguins, looking at a *histogram* for normal distribution, a *boxplot* for homogenity of variance, and a *plot* graph. 
 
 
-```{r}
+```{r graphs}
 hist(penguins$body_mass_g)
 boxplot(penguins$body_mass_g)
 plot(penguins$body_mass_g)
