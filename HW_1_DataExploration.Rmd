@@ -1,0 +1,58 @@
+---
+title: "HW_1_Data_Exploring"
+author: "Antonietta"
+date: "1/24/2021"
+output: 
+  html_document: default
+  github_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Exploring Markdown
+
+On this project I will be exploring _palmerpenguins_ dataset. We will focus on exploring the body mass of penguins. 
+
+
+### Part 1 
+
+We will begin by exploring the general summary of the dataset. 
+
+```{r summary} 
+
+library(palmerpenguins)
+
+summary(penguins)
+
+head(penguins)
+
+nrow(penguins)
+
+```
+
+We can see that the penguin's *body mass* _mean_ was 4202 grams, with the lowest body mass at 2700 grams and the highest at 6300 grams. 
+
+
+
+
+### Part 2 
+
+
+On this section we will explore the body mass of the penguins, looking at a *histogram* for normal distribution, a *boxplot* for homogenity of variance, and a *plot* graph. 
+
+
+```{r graphs}
+hist(penguins$body_mass_g)
+boxplot(penguins$body_mass_g)
+plot(penguins$body_mass_g)
+
+```
+
+From the histogram and boxplot we can see that the penguin's body mass was slightly right skewed. 
+
+#END OF THE DATA EXPLORATION 
+
+
+
