@@ -13,7 +13,7 @@ Every change made to my projects can be seen in the file's _history_ on the *top
 
 1. Am 21 years old
 
-2. Am from Venezuela ![venezuela](https://www.qubicaamf.com/QubicaAMF/files/c1/c1c750e6-639d-465b-ac84-13ec7b0f25c3.jpg) <img src="https://www.qubicaamf.com/QubicaAMF/files/c1/c1c750e6-639d-465b-ac84-13ec7b0f25c3.jpg" width="100" height="100" />
+2. Am from Venezuela ![venezuela](https://www.qubicaamf.com/QubicaAMF/files/c1/c1c750e6-639d-465b-ac84-13ec7b0f25c3.jpg) <img src="https://www.qubicaamf.com/QubicaAMF/files/c1/c1c750e6-639d-465b-ac84-13ec7b0f25c3.jpg" width="550" height="550" />
 
 3. Last year as an undegrad in psychology with a concentration in advanced research ![usf](https://floridacareercenters.org/wp-content/uploads/2017/11/USF-MarshallCenter.jpg) <img src="https://floridacareercenters.org/wp-content/uploads/2017/11/USF-MarshallCenter.jpg" width="40" height="40" />
 
