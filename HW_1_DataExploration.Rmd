@@ -18,7 +18,8 @@ On this project I will be exploring _palmerpenguins_ dataset. We will focus on e
 
 ### Part 1 
 
-We will begin by exploring the general summary of the dataset. 
+We will begin by exploring the general summary of the dataset.
+In the following _chunk_ we will look at a *summary* of the data, the number of *rows* in the matrix, as well as the 
 
 ```{r summary} 
 
