@@ -52,5 +52,9 @@ From the histogram and boxplot we can see that the penguin's body mass was sligh
 
 #END OF THE DATA EXPLORATION 
 
+<output:
+html_document:
+keep_md: true>
+
 
 
