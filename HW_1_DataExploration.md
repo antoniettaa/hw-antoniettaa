@@ -60,4 +60,4 @@ From the histogram and boxplot we can see that the penguin’s body mass
 was slightly right skewed, with most penguins falling somewhere under
 between 3500 and 4500 grams.
 
-\#END OF THE DATA EXPLORATION
+# END OF THE DATA EXPLORATION
