@@ -4,9 +4,9 @@ author: "Antonietta"
 date: "1/24/2021"
 output: 
   
-  github_document: default
-  html_document: default
   keep_md: true
+  html_document: default
+  github_document: default
 ---
 
 ```{r setup, include=FALSE}
