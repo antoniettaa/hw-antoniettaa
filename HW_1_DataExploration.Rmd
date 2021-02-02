@@ -16,6 +16,8 @@ library(palmerpenguins)
 
 ```
 
+<!-- Keep only (1) final copy of your homework script. Currently you have four copies across different folders. Please clean these up. --> 
+
 # Exploring Markdown
 
 On this project I will be exploring _palmerpenguins_ dataset. We will focus on exploring the body mass of penguins. 
@@ -29,6 +31,7 @@ In the following _chunk_ we will look at a *summary* of the data, the *first row
 ```{r summary setup, echo=FALSE}
 
 library(palmerpenguins)
+# You have already run library(penguins) in the chunk above. You only need to library() a package once in a script.
 
 
 summary(penguins)
