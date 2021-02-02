@@ -1,5 +1,9 @@
 <!-- Great work here! Just a few comments below. -->
 
+<!-- First, your repository isn't clearly organized. Please have only 1 folder for each homework assignment (hw01, hw02, hw03, etc.) containing all of the files for that assignment. Currently you have hw1 files in the root/home folder of your repo and two "HW1" folders. Please place any in-class activity files in a folder called 'participation'. -->
+
+<!-- In addition to the above, you have 3 branches currently. master and also hw01 and participation. Please always merge all changes to your repo back into master when you are done with the pull request, then delete the branch. Always make new branches then from master. -->
+
 # :sparkles: Welcome to my repository :sparkles:
 
 #### This repository will store all of my projects for the _programming_ _with_ _data_ class with Dr. Wiernik
@@ -7,7 +11,7 @@ There are two branches you can travel to and easily switch between in this [repo
 * *Master* branch which stores _all_ projects
 * *Homework* branch which stores _homeworks_ 
 
-<!-- You should think of branches as different _times_, not different _places_. The hw01 or hw02 branch is where you *temporarily* work on an assignment before you merge it back into the master branch. Each homework file should be stored in a folder for that homework (hw01, hw02, etc.). Any in-class activities store in a folder called 'participation'. -->
+<!-- You seem confused about what a branch is for. You should think of branches as different _times_, not different _places_. The hw01 or hw02 branch is where you *temporarily* work on an assignment before you merge it back into the master branch. Each homework file should be stored in a folder for that homework (hw01, hw02, etc.). Any in-class activities store in a folder called 'participation'. -->
 
 Every change made to my projects can be seen in the file's _history_ on the *top left*
 
