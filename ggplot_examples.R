@@ -17,3 +17,16 @@ library(progdata)
 tutorial_ggplot
 
 remotes::install_github("bwiernik/progdata@main")
+
+
+# Class 2 
+
+#histogram
+
+library(ggplot2)
+library(tidyverse)
+library(palmerpenguins)
+
+ggplot(penguins)
+  aes(x = bill_length_mm) + 
+  geom_histogram(binwidth = 5)  

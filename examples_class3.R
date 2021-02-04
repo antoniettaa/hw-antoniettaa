@@ -25,10 +25,10 @@ ggplot(penguins) +
 # Scatterplot 3
 ggplot(penguins)+
   aes(x = species, 
-      y = flipper_lenth_mm, 
+      y = flipper_length_mm, 
       fill = species, 
       color = species) +
-  geom_jitter(height = 0
+  geom_jitter(height = 0 , 
               width = .4) +
   geom_boxplot(color = "black")
 
