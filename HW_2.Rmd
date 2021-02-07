@@ -1,0 +1,90 @@
+---
+title: "HW_2"
+author: "Antonietta"
+date: "2/6/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load packages}
+# packages to be used
+library(gapminder)
+library(tidyverse)
+```
+
+# Exercise 1 : Basic dplyr
+
+## Task 1: filter () subset gapminderl data to 3 countries; France, Japan, and Italy and pipe %>% to select country and gdpPercap 
+
+```{r}
+gapminder %>%
+  select(country, year, gdpPercap) %>%
+  filter(country %in% c ("France" , "Japan", "Italy"), year == "1970":"1979")
+
+```
+           
+## Task 2: Make new variable for the change life expectancy to show they have dropped 
+
+```{r}
+gapminder %>%
+  mutate (droplifeExp = lag(lifeExp))
+
+``` 
+
+
+## Task3: filter gapminder to show max GDP per cap by each country
+```{r}
+gapminder %>%
+  select(country, gdpPercap) %>%
+  mutate(gdpPercap_max = gdpPercap) %>%
+  group_by(country) %>%
+  filter(gdpPercap_max == max(gdpPercap_max))
+```
+
+
+## Task 4: Produce scatterplot of Canada's life expectancy vs GDP
+
+```{r}
+gapminder %>%
+  filter(country == "Canada") %>%
+  ggplot() +
+  aes(x =lifeExp, y = gdpPercap) +
+  geom_point(fill = "green" , color = "green", alpha = .5 , size = 2) +
+  scale_y_continuous(trans = 'sqrt')
+
+
+```
+
+
+# Exercise 2 : Explore 2 variables with dplyr and ggplot2 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+``` {r load packages}
+# packages to be used
+library(palmerpenguins)
+library(gapminder)
+library(ggplot2)
+
+```
+
+## Task 1: Quantitative variables 
+Summary of descriptive statistics and scatterplot 
+
+
+
+
+
+
+
+
+
+
+
+
+
