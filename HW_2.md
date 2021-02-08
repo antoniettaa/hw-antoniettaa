@@ -34,15 +34,7 @@ Antonietta
     ## 10 Afghanistan Asia       1997    41.8 22227415      635.        41.7
     ## # … with 1,694 more rows
 
-## Task3: filter gapminder to show max GDP per cap by each country
-
-``` r
-gapminder %>%
-  select(country, gdpPercap) %>%
-  mutate(gdpPercap_max = gdpPercap) %>%
-  group_by(country) %>%
-  filter(gdpPercap_max == max(gdpPercap_max))
-```
+## Task 3: filter gapminder to show max GDP per cap by each country
 
     ## # A tibble: 142 x 3
     ## # Groups:   country [142]

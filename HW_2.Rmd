@@ -39,8 +39,8 @@ gapminder %>%
 ``` 
 
 
-## Task3: filter gapminder to show max GDP per cap by each country
-```{r max}
+## Task 3: filter gapminder to show max GDP per cap by each country
+```{r max, echo=FALSE}
 gapminder %>%
   select(country, gdpPercap) %>%
   mutate(gdpPercap_max = gdpPercap) %>%
@@ -56,7 +56,7 @@ gapminder %>%
   filter(country == "Canada") %>%
   ggplot() +
   aes(x =lifeExp, y = gdpPercap) +
-  geom_point(fill = "green" , color = "green", alpha = .5 , size = 2) +
+  geom_point(fill = "green" , color = "green", alpha = .5 , size = 2, shape = 23) +
   scale_y_continuous(trans = 'sqrt')
 
 
@@ -75,9 +75,8 @@ palmerpenguins::penguins %>%
     summarize(mu_length = mean(flipper_length_mm, na.rm = TRUE) , 
                           mu_weigth = mean(body_mass_g, na.rm = TRUE))
 
-ggplot(palmerpenguins::penguins) +
-aes(x = body_mass_g ,
-    y = flipper_length_mm) +
+ggplot(palmerpenguins::penguins_raw) +
+aes(x = `Body Mass (g)`, y = `Flipper Length (mm)`) +
 geom_point(fill = "purple" , color = "purple", alpha = .5 , size = 1, shape = 23)
 ```
 
@@ -96,14 +95,13 @@ summarise(
   sd = sd(flipper_length_mm, na.rm = TRUE))%>% 
   ungroup()
 
-ggplot(palmerpenguins::penguins) +
-  aes(x = sex , 
-      y = flipper_length_mm ,
-      fill = sex, 
-      color = sex) +
+ggplot(palmerpenguins::penguins_raw) +
+  aes(x = Sex , 
+      y =`Flipper Length (mm)`,
+      fill = Sex, 
+      color = Sex) +
   geom_jitter(height = 0 , 
               width = .4) 
-
 
 ```
 
