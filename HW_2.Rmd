@@ -17,7 +17,7 @@ library(tidyverse)
 
 # Exercise 1 : Basic dplyr
 
-## Task 1: filter () subset gapminderl data to 3 countries; France, Japan, and Italy and pipe %>% to select country and gdpPercap 
+## Task 1: filter () subset gapminder  data to 3 countries; France, Japan, and Italy and pipe %>% to select country and gdpPercap 
 
 ```{r}
 gapminder %>%
@@ -66,6 +66,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ``` {r load packages}
+
 # packages to be used
 library(palmerpenguins)
 library(gapminder)
@@ -75,14 +76,56 @@ library(ggplot2)
 
 ## Task 1: Quantitative variables 
 Summary of descriptive statistics and scatterplot 
+The variables used are; flipper length and body mass of the penguins 
+
+```{r summary}
+palmerpenguins::penguins %>%
+    summarize(mu_length = mean(flipper_length_mm, na.rm = TRUE) , 
+                          mu_weigth = mean(body_mass_g, na.rm = TRUE))
+
+ggplot(palmerpenguins::penguins) +
+aes(x = body_mass_g ,
+    y = flipper_length_mm) +
+geom_point(fill = "purple" , color = "purple", alpha = .5 , size = 1, shape = 23)
+```
+
+
+
+## Task 2: Categorical variable and Quantitative variable 
+Make summary and useful plots to visualize these variables 
+The variables used are flipper length and sex of the penguins 
+
+``` {r}
+
+group_by(penguins , flipper_length_mm, sex) %>% 
+summarise(
+  count = n(), 
+  mean = mean(flipper_length_mm, na.rm = TRUE),
+  sd = sd(flipper_length_mm, na.rm = TRUE))%>% 
+  ungroup()
+
+ggplot(palmerpenguins::penguins) +
+  aes(x = sex , 
+      y = flipper_length_mm ,
+      fill = sex, 
+      color = sex) +
+  geom_jitter(height = 0 , 
+              width = .4) 
+
+
+```
 
 
 
 
 
 
+# Bonus Exercise: Evaluate this code and describe the result. The goal was to get the data for Rwanda and Afghanistan. Does this work? Why or why not? If not, what is the correct way to do this?
 
+``` {r}
+filter(gapminder, country == c("Rwanda", "Afghanistan"))
 
+```
 
 
 
