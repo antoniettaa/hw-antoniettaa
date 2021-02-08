@@ -118,8 +118,6 @@ ggplot(palmerpenguins::penguins) +
 
 
 
-
-
 # Bonus Exercise: Evaluate this code and describe the result. The goal was to get the data for Rwanda and Afghanistan. Does this work? Why or why not? If not, what is the correct way to do this?
 
 ``` {r}
@@ -127,6 +125,14 @@ filter(gapminder, country == c("Rwanda", "Afghanistan"))
 
 ```
 
+The previous code is filtering gapminder and countries to include Rwanda and Afghanistan, however, a more efficient way to do this is using gapminder and piping '%>%', which means 'and then...' to filter the countries by using '%in%' instead of '=='. '%in%' has a similar property than '==' except that it checks the input values against all the other values in the vector.  
+
+
+``` {r}
+gapminder %>%
+filter(country %in% c("Rwanda", "Afghanistan"))
+
+```
 
 
 
