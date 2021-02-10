@@ -1,0 +1,166 @@
+---
+title: "HW_2"
+author: "Antonietta"
+date: "2/6/2021"
+output:   
+  
+  github_document: default
+  html_document: default
+  keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(gapminder)
+library(tidyverse)
+library(palmerpenguins)
+library(gapminder)
+library(ggplot2)
+
+```
+
+
+# Exercise 1 : Basic dplyr
+
+## Task 1:  
+### Filter () subset gapminder  data to 3 countries; France, Japan, and Italy and pipe %>% to select country and gdpPercap 
+
+We will be piping using '%>%' to tell R in what order to perform the functions 
+We will use filter() to have R return the rows that match our select condition of country 
+We will then us %in% so it checks all of our input values against each other
+Our input values will come from a vector that we will create with the function c() 
+We will select the decade of the 70s by adding year>1969 & year <1980 into the filter section 
+Finally we will use the function select () to take the subset of country , year and GDP from the  gapminder
+
+
+```{r filter , echo=FALSE}
+gapminder %>%
+  filter(country %in% c ("France" , "Japan", "Italy"), year>1969 & year <1980) %>%
+  select(country, year, gdpPercap) 
+
+```
+           
+# Task 2: 
+## Make new variable for the change life expectancy to show they have dropped 
+
+We will pipe from gapminder
+We will mutate the lifeExp variable, which creates a new variable named droplifeExp
+In the mutation we will add the function lag() to our original object to shift the time back 
+
+```{r mutate , echo=FALSE}
+gapminder %>%
+  mutate (droplifeExp = lag(lifeExp))
+
+``` 
+
+
+# Task 3: 
+## Filter gapminder to show max GDP per cap by each country
+
+We will pipe from gapminder 
+Once again we will use the function select() to take the substes of country and GDP
+We will mutate the gdpPercap object in order to have a new object that represents the highest GDP per cap
+We will group by country, so it shows max GDP for each country
+We will filter gdpPercap_max and use the max() function to show only the max GDP per cap
+
+```{r max, echo=FALSE}
+gapminder %>%
+  select(country, gdpPercap) %>%
+  mutate(gdpPercap_max = gdpPercap) %>%
+  group_by(country) %>%
+  filter(gdpPercap_max == max(gdpPercap_max))
+```
+
+# Task 4: 
+## Produce scatterplot of Canada's life expectancy vs GDP
+
+We will pipe from gapminder
+We will use filter () so R returns the row that matches our variable 
+We will then pipe to ggplot 
+We will use aes() to compute our x and y variables 
+We will use geom_point to compute for our plot's visuals 
+We will use scale_y_continuous to present the y axis in log of 10 
+
+
+```{r scatterplot , echo=FALSE}
+gapminder %>%
+  filter(country == "Canada") %>%
+  ggplot() +
+  aes(x =lifeExp, y = gdpPercap) +
+  geom_point(fill = "green" , color = "green", alpha = .5 , size = 2, shape = 23) +
+  scale_y_continuous(trans = 'log10')
+
+
+```
+
+
+# Exercise 2 : Explore 2 variables with dplyr and ggplot2 
+
+
+# Task 1: 
+## Quantitative variables. Summary of descriptive statistics and scatterplot. The variables used are; flipper length and body mass of the penguins 
+
+We employ summarize() so R gies us a new data frame where our rows will be ### combined into one 
+We wll use ggplot() int he same way as Exercise 1 Task #4 
+
+```{r summary , echo=FALSE}
+palmerpenguins::penguins %>%
+    summarize(mu_length = mean(flipper_length_mm, na.rm = TRUE) , 
+                          mu_weigth = mean(body_mass_g, na.rm = TRUE))
+
+ggplot(palmerpenguins::penguins_raw) +
+aes(x = `Body Mass (g)`, y = `Flipper Length (mm)`) +
+geom_point(fill = "purple" , color = "purple", alpha = .5 , size = 1, shape = 23)
+```
+
+
+
+# Task 2: 
+## Categorical variable and Quantitative variable. Make summary and useful plots to visualize these variables. The variables used are flipper length and sex of the penguins 
+
+We will use the function group_by() to then summarise the specific rows we previously grouped 
+We will ungroup() 
+We will use ggplot() as we had done before, but this time adding geom_jitter() to add random variability and solve overplotting 
+
+``` {r summarise , echo=FALSE}
+
+group_by(penguins , flipper_length_mm, sex) %>% 
+summarise(
+  count = n(), 
+  mean = mean(flipper_length_mm, na.rm = TRUE),
+  sd = sd(flipper_length_mm, na.rm = TRUE))%>% 
+  ungroup()
+
+ggplot(palmerpenguins::penguins_raw) +
+  aes(x = Sex , 
+      y =`Flipper Length (mm)`,
+      fill = Sex, 
+      color = Sex) +
+  geom_jitter(height = 0 , 
+              width = .4) 
+
+```
+
+
+
+
+# Bonus Exercise: 
+## Evaluate this code and describe the result. The goal was to get the data for Rwanda and Afghanistan. Does this work? Why or why not? If not, what is the correct way to do this?
+
+``` {r bonus , echo=FALSE}
+filter(gapminder, country == c("Rwanda", "Afghanistan")) 
+
+```
+
+### The previous code is filtering gapminder and countries to include Rwanda and Afghanistan, however, a more efficient way to do this is using gapminder and piping '%>%', which means 'and then...' to filter the countries by using '%in%' instead of '=='. '%in%' has a similar property than '==' except that it checks the input values against all the other values in the vector.  
+
+
+``` {r answer, echo=FALSE }
+gapminder %>%
+filter(country %in% c("Rwanda", "Afghanistan"))
+
+```
+
+
+
+
