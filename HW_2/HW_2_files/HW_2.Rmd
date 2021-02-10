@@ -22,7 +22,7 @@ library(ggplot2)
 
 # Exercise 1 : Basic dplyr
 
-## Task 1: 
+## Task 1:  
 ### Filter () subset gapminder  data to 3 countries; France, Japan, and Italy and pipe %>% to select country and gdpPercap 
 
 We will be piping using '%>%' to tell R in what order to perform the functions 
