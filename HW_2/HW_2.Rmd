@@ -3,8 +3,8 @@ title: "HW_2"
 author: "Antonietta"
 date: "2/6/2021"
 output:   
-  github_document: default
   html_document: default
+  github_document: default
   keep_md: true
 ---
 
