@@ -68,9 +68,8 @@ gapminder %>%
   filter(country == "Canada") %>%
   ggplot() +
   aes(x = lifeExp, y = gdpPercap) +
-  geom_point(fill = "green" , color = "green", alpha = .5 , size = 2, shape = 23) +
+  geom_point(fill = "green", color = "green", alpha = .5 , size = 2, shape = 23) +
   scale_y_continuous(trans = 'log10') # BMW: Almost! It asked for a log scale, not sqrt
-
 ```
 
 
