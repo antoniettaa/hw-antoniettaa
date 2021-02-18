@@ -69,7 +69,7 @@ gapminder %>%
   ggplot() +
   aes(x = lifeExp, y = gdpPercap) +
   geom_point(fill = "green" , color = "green", alpha = .5 , size = 2, shape = 23) +
-  scale_y_continuous(trans = 'sqrt') # BMW: nice idea! in general, it's best to avoid transforming scales with square root or log or similar. people have a harder time understanding what the graph means (they assume the graph is linear)
+  scale_y_continuous(trans = 'log10') # BMW: Almost! It asked for a log scale, not sqrt
 
 ```
 
