@@ -5,8 +5,9 @@ date: "2/6/2021"
 output:   
   html_document: default
   github_document: default
-  keep_md: true
 ---
+
+<!-- BMW: You don't need `keep_md: true` -->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -18,47 +19,57 @@ library(ggplot2)
 
 ```
 
+<!-- BMW: On your homeworks, please use the same numbering scheme as shown on the assignments--1.1, 1.2, 1.3, etc. -->
 
 # Exercise 1 : Basic dplyr
 
 ## Task 1: filter () subset gapminder  data to 3 countries; France, Japan, and Italy and pipe %>% to select country and gdpPercap 
 
-```{r filter , echo=FALSE}
+<!-- BMW: Don't put echo = FALSE. I need that to be able to review your code easily. -->
+
+```{r filter }
 gapminder %>%
   select(country, year, gdpPercap) %>%
-  filter(country %in% c ("France" , "Japan", "Italy"), year>1969 & year <1980)
-
+  filter(country %in% c ("France", "Japan", "Italy"), year > 1969 & year < 1980)
 ```
            
 ## Task 2: Make new variable for the change life expectancy to show they have dropped 
 
-```{r mutate , echo=FALSE}
+```{r mutate }
 gapminder %>%
   mutate (droplifeExp = lag(lifeExp))
-
 ``` 
+
+<!-- BMW: No, lag() just shows the previous row of data. You need to combine that with other functions to (1) compute the difference between each row and the previous rows, then (2) filter to show just the values where life expectancy has dropped. Like this: -->
+
+```{r}
+gapminder %>% 
+  group_by(country) %>% 
+  mutate(changeLifeExp = lifeExp - lag(lifeExp)) %>% 
+  filter(changeLifeExp < 0)
+```
 
 
 ## Task 3: filter gapminder to show max GDP per cap by each country
-```{r max, echo=FALSE}
+
+```{r max}
 gapminder %>%
   select(country, gdpPercap) %>%
-  mutate(gdpPercap_max = gdpPercap) %>%
+  mutate(gdpPercap_max = gdpPercap) %>% # BMW: this step is unnecessary
   group_by(country) %>%
-  filter(gdpPercap_max == max(gdpPercap_max))
+  filter(gdpPercap_max == max(gdpPercap_max)) # BMW: you could just use gdpPercap here instead
 ```
 
 
 ## Task 4: Produce scatterplot of Canada's life expectancy vs GDP
 
-```{r scatterplot , echo=FALSE}
+```{r scatterplot }
 gapminder %>%
   filter(country == "Canada") %>%
   ggplot() +
-  aes(x =lifeExp, y = gdpPercap) +
+  aes(x = lifeExp, y = gdpPercap) +
   geom_point(fill = "green" , color = "green", alpha = .5 , size = 2, shape = 23) +
-  scale_y_continuous(trans = 'sqrt')
-
+  scale_y_continuous(trans = 'sqrt') # BMW: nice idea! in general, it's best to avoid transforming scales with square root or log or similar. people have a harder time understanding what the graph means (they assume the graph is linear)
 
 ```
 
@@ -67,40 +78,44 @@ gapminder %>%
 
 
 ## Task 1: Quantitative variables 
-Summary of descriptive statistics and scatterplot 
-The variables used are; flipper length and body mass of the penguins 
 
-```{r summary , echo=FALSE}
+Summary of descriptive statistics and scatterplot. 
+The variables used are: flipper length and body mass of the penguins.
+
+<!-- BMW: You need blank lines between paragraphs in Markdown. -->
+
+```{r summary }
 palmerpenguins::penguins %>%
-    summarize(mu_length = mean(flipper_length_mm, na.rm = TRUE) , 
-                          mu_weigth = mean(body_mass_g, na.rm = TRUE))
+  summarize(mu_length = mean(flipper_length_mm, na.rm = TRUE), 
+            mu_weight = mean(body_mass_g, na.rm = TRUE))
 
 ggplot(palmerpenguins::penguins_raw) +
-aes(x = `Body Mass (g)`, y = `Flipper Length (mm)`) +
-geom_point(fill = "purple" , color = "purple", alpha = .5 , size = 1, shape = 23)
+  aes(x = `Body Mass (g)`, y = `Flipper Length (mm)`) +
+  geom_point(fill = "purple" , color = "purple", alpha = .5 , size = 1, shape = 23)
 ```
 
 
 
 ## Task 2: Categorical variable and Quantitative variable 
+
 Make summary and useful plots to visualize these variables 
 The variables used are flipper length and sex of the penguins 
 
-``` {r summarise , echo=FALSE}
-
-group_by(penguins , flipper_length_mm, sex) %>% 
-summarise(
-  count = n(), 
-  mean = mean(flipper_length_mm, na.rm = TRUE),
-  sd = sd(flipper_length_mm, na.rm = TRUE))%>% 
+``` {r summarise }
+penguins %>% 
+  group_by(sex) %>% # BMW: You only include the categorical variable you want to group by in group_by().
+  summarise(
+    count = n(), 
+    mean = mean(flipper_length_mm, na.rm = TRUE),
+    sd = sd(flipper_length_mm, na.rm = TRUE))%>% 
   ungroup()
 
 ggplot(palmerpenguins::penguins_raw) +
-  aes(x = Sex , 
+  aes(x = Sex, 
       y =`Flipper Length (mm)`,
       fill = Sex, 
       color = Sex) +
-  geom_jitter(height = 0 , 
+  geom_jitter(height = 0, 
               width = .4) 
 
 ```
@@ -110,20 +125,16 @@ ggplot(palmerpenguins::penguins_raw) +
 
 # Bonus Exercise: Evaluate this code and describe the result. The goal was to get the data for Rwanda and Afghanistan. Does this work? Why or why not? If not, what is the correct way to do this?
 
-``` {r bonus , echo=FALSE}
+``` {r bonus }
 filter(gapminder, country == c("Rwanda", "Afghanistan")) 
 
 ```
 
 The previous code is filtering gapminder and countries to include Rwanda and Afghanistan, however, a more efficient way to do this is using gapminder and piping '%>%', which means 'and then...' to filter the countries by using '%in%' instead of '=='. '%in%' has a similar property than '==' except that it checks the input values against all the other values in the vector.  
 
+<!-- BMW: The only issue is the `%in%` vs `==` one. `==` won't work for the reason you say here. -->
 
-``` {r answer, echo=FALSE }
+``` {r answer }
 gapminder %>%
 filter(country %in% c("Rwanda", "Afghanistan"))
-
 ```
-
-
-
-
