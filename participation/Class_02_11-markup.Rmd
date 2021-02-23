@@ -1,0 +1,85 @@
+---
+title: "Class_02_11-markup"
+author: "Antonietta"
+date: "2/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(gapminder)
+```
+
+
+## Compute total scores
+
+Total scores for each person
+Keep the total scored and demographics 
+
+``` {r}
+# scales - A , C , E , N O
+# five items each 
+
+bfi_scored <- # make a new data frame with my scored scores
+  psych::bfi %>%
+  rowwise() %>% # since we need rows per each person
+  mutate(A = mean(c(A1, A2, A3, A4, A5), na.rm = TRUE)) # computing each mean score for each row 
+
+```
+
+
+# BROAD OVERVIEW ! 
+
+```{r}
+
+# filter(.data = DATA, ...) , the first object is always the data you will be manipulating, and then the conditions you want to match 
+  filter(.data = gapminder, country == "Denmark")
+
+```
+
+```{r}
+
+# to test conditions against each other we use '%in%                       use it when you want to test for values that could pass, and the question is whether there is a single value that should pass/be acceptable 
+
+
+# to get the conditions one at a time we use '=='                         use it when you want to test for filtering for those values whether they "pass" in a pass fail basis
+
+
+# all the relational operators do element wise comparisons like '==' , '>=', '<=', '!=', %in%
+
+
+```
+
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+
+```{r}
+
+
+```
+
+
+```{r}
+
+
+```
+
+
+
+
+
