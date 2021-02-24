@@ -134,6 +134,8 @@ ggplot(ng_data) +
   theme_classic()
 ```  
 
+The histograms show that all the variables are roughly normally distributed. The green vaiable seems to be positively skewed. 
+
 
 
   5. Make scatterplots showing the relationships between **green reputation** and each personality trait.
@@ -167,16 +169,17 @@ ggplot(na.omit(ng_data)) +
                             | student == "student"))
 ```  
 
+The rainfall plot 
 
 
   6. Compare **green reputation** for students and non-students using a **rainfall plot** (bar + density + data points).
 ```{r}
 ggplot(na.omit(ng_data)) +
-  aes( x = student , 
-       y = green_tot_pomp , 
+  aes( x = green_tot_pomp , 
+       y = student , 
        color = student) +
   geom_jitter( height = .20)+
-  geom_boxplot(color = "green",
+  geom_boxplot(color = "violet",
                alpha = .5 ,
                width = .1 , 
                size = .5 ) +  
@@ -190,13 +193,29 @@ ggplot(na.omit(ng_data)) +
 ```
 
 
-
+This plot sows that students seem to have lower green reputation scores than non-students.
 
 
   7. Compute a summary table of means, SDs, medians, minima, and maxima for the four total scores for students and non-students.
 ```{r}
 
+ng_data %>%
+  group_by(student) %>%
+  summarize(across(c(green_tot_pomp, comp_tot_pomp, intel_tot_pomp, open_tot_pomp),
+            list(
+              mean = ~mean(.x , na.rm = TRUE),
+              SD = ~sd(.x , na.rm =  TRUE), 
+              median = ~median(.x , na.rm =  TRUE),
+              minima = ~min(.x, na.rm =  TRUE), 
+              mxima = ~max(.x, na.rm = TRUE)
+            )))
+
 ``` 
 
+The summary shows that non-students score slightly higher than students in total measures of green,comp, intel, but not in the open measure. 
+In regards to standar deviation, non-students was lower than for students in the green, intel, and open measures, however, it was higher for the comp measure.
+The median of green, and comp measures, however, the medians for open, and intel were similar.   
+Maximas were similar amongst students and non-students for green,but the scores were higher for students in the measures of intel, and open. 
+Finally, for the minimas, the scores were higher for non-students across all measures. 
 
 In your assignment, prepare an RMarkdown file that includes both the coding and (for 4-7) narrative descriptions of your results.
