@@ -1,0 +1,202 @@
+---
+title: "HW_3"
+author: "Antonietta"
+date: "2/23/2021"
+output: 
+gitthub_document: default 
+    html_document: default 
+    keep_md: TRUE
+
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr) 
+library(ggplot2)
+library(tidyverse)
+library(scales)
+
+```
+
+# Homework 03
+
+You will analyze data looking at the relationship between **green reputation** and three personality traits--**compassion**, **intellectual curiosity**, and **openness to experiences**.
+The dataset includes data from **students** and **non-students**.
+
+```{r}
+dictionary <- readr::read_csv("green_dictionary.csv")
+green_data <- readr::read_csv("green_data.csv")
+
+``` 
+
+For your assignment, do the following.
+
+  1. Inspect the item responses (e.g., with graphs or by summarizing distinct values). 
+     Is anything unusual?
+```{r}
+print(green_data)  #The -99 isunusual 
+
+new_green_data <- green_data %>%
+mutate(
+  across(everything(),
+ ~ na_if(.x , "-99")
+)) #The min. value of -99 is now replaced with 1, and all the -99 are NA 
+
+summary(new_green_data) 
+
+#   ~ says that you are going to use the .x symbol , .x marks the spot 
+# 'everything()' = ALL COLUMNS 
+# .missing is for when you look for missing values 
+# NA is for when this is missing 
+# .x = the current column 
+```
+
+
+  2. Compute total scores for the four scales. 
+     Recode variables as needed.
+```{r}
+
+#We will be recoding variables to make them more concrete and easier to read 
+
+ng_data <- new_green_data %>%
+  rowwise() %>% 
+  mutate(green_tot = sum(c(green1,green2,green3,green4,green5), na.rm = FALSE),
+         comp_tot = sum(c(comp1,comp2,comp3,comp4,comp5,comp6,comp7,comp8,comp9,comp10), na.rm = FALSE),
+         intel_tot = sum(c(intel1,intel2,intel3,intel4,intel5,intel6,intel7,intel8,intel9,intel10), na.rm =FALSE),
+         open_tot = sum(c(open1,open2,open3,open4,open5,open6,open7,open8,open9,open10), na.rm = FALSE)
+   )
+
+print(ng_data
+      )
+
+```   
+
+
+  3. Rescale the variables so that they go from 0-100 instead of the original range.
+     Name the rescaled variables `*_pomp`.
+```{r}
+
+ng_data <- ng_data %>% 
+   mutate(across
+          (c(green1:open10),
+             ~ recode(.x, "1" = 0, "2" = 25, "3" = 50, "4" = 75, "5" = 100),
+                           .names = "{.col}_pomp")
+                          ) 
+  ng_data <- ng_data %>% 
+  rowwise() %>% 
+  mutate(
+    green_tot_pomp = mean(
+    c(green1_pomp,green2_pomp,green3_pomp,green4_pomp,green5_pomp), na.rm = TRUE),
+         comp_tot_pomp = mean(
+           c(comp1_pomp,comp2_pomp,comp3_pomp,comp4_pomp,comp5_pomp,comp6_pomp,comp7_pomp,comp8_pomp,comp9_pomp,comp10_pomp), na.rm = TRUE),
+         intel_tot_pomp = mean(
+           c(intel1_pomp,intel2_pomp,intel3_pomp,intel4_pomp,intel5_pomp,intel6_pomp,intel7_pomp,intel8_pomp,intel9_pomp,intel10_pomp), na.rm = TRUE),
+         open_tot_pomp = mean(
+           c(open1_pomp,open2_pomp,open3_pomp,open4_pomp,open5_pomp,open6_pomp,open7_pomp,open8_pomp,open9_pomp,open10_pomp), na.rm = TRUE),) 
+ 
+```
+
+
+
+
+  4. Make plots that illustrate the distributions of the 4 POMP-scored variables.
+
+```{r}
+ggplot(ng_data_pomp[which(ng_data_pomp$green_tot_pomp>0),]) +
+  aes(green_tot_pomp) +
+  geom_histogram( binwidth = .5, 
+                  fill = "pink" , 
+                  col = "black")+
+  theme_classic()
+
+ggplot(ng_data) +
+  aes(intel_pomp) +
+  geom_histogram(binwidth = .5 , fill = 
+                   "green", 
+                 col = "black")+
+  theme_classic()
+
+ggplot(ng_data +
+  aes(comp_pomp) +
+  geom_histogram(binwidth = .5, 
+                 fill = "blue", 
+                 col = "black")+
+  theme_classic()
+  
+ggplot(ng_data) +
+  aes(open_pomp) +
+  geom_histogram(binwidth = .5,
+                 fill = "purple", 
+                 col = "black")+
+  theme_classic()
+```  
+
+
+
+  5. Make scatterplots showing the relationships between **green reputation** and each personality trait.
+     Include trend lines for **students** and **non-students**.
+     What do these plots show?
+```{r}
+new_green_data %>%
+  mutate(
+    student = recode(student , "1" = "Student" , "2" = "NonStudent")
+  )
+ggplot(na.omit(new_green_data)) +
+  aes( x = green_pomp ,
+       y = comp_pomp ,
+       fill = student , 
+       color = student) +
+  geom_point() +
+  geom_smooth(data = subset(new_green_data , student == "NonStudent" 
+                            | student == "student"))
+ggplot(na.omit(new_green_data)) +
+  aes( x = green_pomp ,
+       y = open_pomp ,
+       fill = student , 
+       color = student) +
+  geom_point() +
+  geom_smooth(data = subset(new_green_data , student == "NonStudent" 
+                            | student == "student"))
+ggplot(na.omit(new_green_data)) +
+  aes( x = green_pomp ,
+       y = intel_pomp ,
+       fill = student , 
+       color = student) +
+  geom_point() +
+  geom_smooth(data = subset(new_green_data , student == "NonStudent" 
+                            | student == "student"))
+```  
+
+
+
+  6. Compare **green reputation** for students and non-students using a **rainfall plot** (bar + density + data points).
+```{r}
+ggplot(na.omit(new_green_data)) +
+  aes( x = student , 
+       y = green_pomp , 
+       color = student) +
+  geom_jitter( height = .20)+
+  geom_boxplot(color = "green",
+               alpha = .5 ,
+               width = .1 , 
+               size = .5 ) +  
+  ggdist::stat_slab(
+                    height = .3,
+                    color ="green",
+                    size = .2 ,
+                    alpha = .5 ,
+                    position = position_nudge( y = .5)
+                    )
+```
+
+
+
+
+
+  7. Compute a summary table of means, SDs, medians, minima, and maxima for the four total scores for students and non-students.
+```{r}
+``` 
+
+
+In your assignment, prepare an RMarkdown file that includes both the coding and (for 4-7) narrative descriptions of your results.
