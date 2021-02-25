@@ -35,14 +35,17 @@ For your assignment, do the following.
   1. Inspect the item responses (e.g., with graphs or by summarizing distinct values). 
      Is anything unusual?
 ```{r}
-print(green_data)  #The -99 isunusual 
+print(green_data)  #The -99 is unusual 
+
+reversed <- dictionary %>%
+  filter(Keying == -1) %>%
+  pull(Item)
 
 new_green_data <- green_data %>%
 mutate(
   across(everything(),
- ~ na_if(.x , "-99")), 
- student = recode(student, "1" = "not a student", "2" = "student", .missing = "Unknown"))
-
+ ~ na_if(.x , "-99"))
+ 
  #The min. value of -99 is now replaced with 1, and all the -99 are NA 
 
 summary(new_green_data) 
@@ -61,12 +64,12 @@ summary(new_green_data)
 
 #We will be recoding variables to make them more concrete and easier to read 
 
-ng_data <- new_green_data %>%
+ new_green_data %>%
   rowwise() %>% 
-  mutate(green_tot = sum(c(green1,green2,green3,green4,green5), na.rm = FALSE),
-         comp_tot = sum(c(comp1,comp2,comp3,comp4,comp5,comp6,comp7,comp8,comp9,comp10), na.rm = FALSE),
-         intel_tot = sum(c(intel1,intel2,intel3,intel4,intel5,intel6,intel7,intel8,intel9,intel10), na.rm =FALSE),
-         open_tot = sum(c(open1,open2,open3,open4,open5,open6,open7,open8,open9,open10), na.rm = FALSE)
+  mutate(green_tot = sum(c_across(green1:green5), na.rm = TRUE),
+         comp_tot = sum(c_across(comp1:comp10), na.rm = TRUE),
+         intel_tot = sum(c_across(intel1:intel10), na.rm =TRUE),
+         open_tot = sum(c_across(open1:open10), na.rm = TRUE)
    )
 
 print(ng_data
@@ -84,19 +87,29 @@ ng_data <- ng_data %>%
           (c(green1:open10),
              ~ recode(.x, "1" = 0, "2" = 25, "3" = 50, "4" = 75, "5" = 100),
                            .names = "{.col}_pomp")
-                          ) 
+                          )
+
+print(ng_data)
+
   ng_data <- ng_data %>% 
   rowwise() %>% 
   mutate(
-    green_tot_pomp = mean(
+    green_tot_pomp = 
+      mean(
       c_across(green1_pomp:green5_pomp), na.rm = TRUE),
-    comp_tot_pomp = mean(
+    comp_tot_pomp = 
+      mean(
            c_across(comp1_pomp:comp10_pomp), na.rm = TRUE),
-    intel_tot_pomp = mean(
+    intel_tot_pomp = 
+      mean(
            c_across(intel1_pomp:intel10_pomp), na.rm = TRUE),
-    open_tot_pomp = mean(
-           c_across(open1_pomp:open10_pomp), na.rm = TRUE),)
- 
+    open_tot_pomp = 
+      mean(
+           c_across(open1_pomp:open10_pomp), na.rm = TRUE))
+  
+  ng_data$student <- recode_factor(ng_data$student, "1" = "not a student", "2" = "student", .default = NULL)
+  
+
 ```
 
 
@@ -134,7 +147,7 @@ ggplot(ng_data) +
   theme_classic()
 ```  
 
-The histograms show that all the variables are roughly normally distributed. The green vaiable seems to be positively skewed. 
+The histograms show that all the variables are roughly normally distributed. The green reputation total variable seems to be slightly negatively skewed. 
 
 
 
@@ -169,7 +182,7 @@ ggplot(na.omit(ng_data)) +
                             | student == "student"))
 ```  
 
-The rainfall plot 
+The rainfall plots show that students had slightly higher scores than non-students across the measures, however no-students seemed to have higher scores regarding green reputation
 
 
   6. Compare **green reputation** for students and non-students using a **rainfall plot** (bar + density + data points).
