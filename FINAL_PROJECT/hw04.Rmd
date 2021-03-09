@@ -2,10 +2,12 @@
 title: "hw04"
 author: "Antonietta"
 date: "3/8/2021"
-output:  
-          html_document: default
-          github_document: default
-          keep_md: true
+output:   
+  github_document: default
+  html_document: default
+  keep_md: true
+
+
 ---
 
 ```{r setup, include=FALSE}
