@@ -5,6 +5,7 @@ date: "3/8/2021"
 output:  
           html_document: default
           github_document: default
+          keep_md: true
 ---
 
 ```{r setup, include=FALSE}
@@ -43,7 +44,7 @@ adhd_data %>%
             )))
 ```
 
-```{r, practicing plots, setup, include=TRUE}
+```{r, practicing plots}
 
 adhd_data %>%
   ggplot()+
