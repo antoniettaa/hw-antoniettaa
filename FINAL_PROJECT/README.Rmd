@@ -1,23 +1,10 @@
----
-title: "HW_4"
-author: "Antonietta"
-date: "3/7/2021"
-output: html_document
----
+# README 
 
-```{r setup, include=FALSE}
-
-knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
-library(readr)
-
-```
+Here are all the files for Antonietta's *final project* 
 
 
+### The different folders contain 
 
-``` {r}
-
-source("adhd.cvs") 
-
-
-```
+*ADMIN* for all administrative information like _IRB approval_ 
+*DOC* for all documentation like _code books_
+*`R* for all _scripts_ and _markdowns_ 
