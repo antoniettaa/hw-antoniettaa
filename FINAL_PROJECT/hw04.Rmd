@@ -14,7 +14,7 @@ library(readr)
 ```
 
 
-```{r data}
+```{r data, setup, include=FALSE}
 
 if( !dir.exists(here::here("FINAL_PROJECT","data"))) {
   dir.create(here::here("FINAL_PROJECT","data"), recursive =TRUE)
@@ -24,7 +24,7 @@ adhd_data <- read_csv(here::here("FINAL_PROJECT","data","adhd.csv"))
 
 ```
 
-```{r, cleaning }
+```{r, cleaning , setup, include=FALSE}
 
 adhd_data
   na = c("", "NaN", "NA")
@@ -43,7 +43,7 @@ adhd_data %>%
             )))
 ```
 
-```{r, practicing plots}
+```{r, practicing plots, setup, include=TRUE}
 
 adhd_data %>%
   ggplot()+
