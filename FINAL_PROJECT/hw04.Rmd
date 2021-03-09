@@ -1,0 +1,59 @@
+---
+title: "hw04"
+author: "Antonietta"
+date: "3/8/2021"
+output:  
+          html_document: default
+          github_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+```
+
+
+```{r data}
+
+if( !dir.exists(here::here("FINAL_PROJECT","data"))) {
+  dir.create(here::here("FINAL_PROJECT","data"), recursive =TRUE)
+}
+
+adhd_data <- read_csv(here::here("FINAL_PROJECT","data","adhd.csv"))
+
+```
+
+```{r, cleaning }
+
+adhd_data
+  na = c("", "NaN", "NA")
+
+```
+
+```{r, practicing summary}
+
+adhd_data %>%
+  group_by(Ethnicity, Measure, Score) %>%
+  summarise(across(c(Value),
+            list(
+              mean = ~mean(.x, na.rm = TRUE),
+              sd = ~sd(.x, na.rm = TRUE)
+              
+            )))
+```
+
+```{r, practicing plots}
+
+adhd_data %>%
+  ggplot()+
+  aes(x = Ethnicity,
+      y = Value) +
+  geom_point(fill = "purple" , 
+             color = "purple", 
+             alpha = .5,
+             size = 2,
+             shape = 20) +
+  theme_minimal()
+
+```
