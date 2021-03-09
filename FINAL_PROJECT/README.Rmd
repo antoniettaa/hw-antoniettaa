@@ -1,0 +1,23 @@
+---
+title: "HW_4"
+author: "Antonietta"
+date: "3/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+
+```
+
+
+
+``` {r}
+
+source("adhd.cvs") 
+
+
+```
