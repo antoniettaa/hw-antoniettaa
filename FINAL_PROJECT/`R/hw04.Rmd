@@ -23,16 +23,12 @@ if( !dir.exists(here::here("FINAL_PROJECT","data"))) {
   dir.create(here::here("FINAL_PROJECT","data"), recursive =TRUE)
 }
 
-adhd_data <- read_csv(here::here("FINAL_PROJECT","data","adhd.csv"))
+adhd_data <- read_csv(here::here("FINAL_PROJECT","data","adhd.csv"),
+  na = c("", "NaN", "Inf", "-Inf", "NA"))
 
 ```
 
-```{r, cleaning , setup, include=FALSE}
-
-adhd_data
-  na = c("", "NaN", "NA")
-
-```
+# Summary
 
 ```{r, practicing summary}
 
@@ -41,10 +37,17 @@ adhd_data %>%
   summarise(across(c(Value),
             list(
               mean = ~mean(.x, na.rm = TRUE),
-              sd = ~sd(.x, na.rm = TRUE)
+              sd = ~sd(.x, na.rm = TRUE), 
+              min = ~min(.x, na.rm = TRUE),
+              max = ~max(.x, na.rm = TRUE)
               
             )))
+
 ```
+
+
+# Plots 
+
 
 ```{r, practicing plots}
 
@@ -59,4 +62,17 @@ adhd_data %>%
              shape = 20) +
   theme_minimal()
 
+
 ```
+
+
+# Output
+
+```{r, output }
+
+write_csv(adhd_data , here::here("FINAL_PROJECT", "data", "adhd_data" ))
+
+       
+```
+
+
