@@ -50,7 +50,7 @@ adhd_data %>%
 
 ```{r, practicing plots}
 
-adhd_data %>%
+plot_adhd <- adhd_data %>%
   ggplot()+
   aes(x = Ethnicity,
       y = Value) +
@@ -60,6 +60,9 @@ adhd_data %>%
              size = 2,
              shape = 20) +
   theme_minimal()
+
+plot_adhd
+
 
 
 ```
@@ -71,6 +74,7 @@ adhd_data %>%
 
 write_csv(adhd_data , here::here("FINAL_PROJECT", "data", "adhd_data" ))
 
+ggsave(here::here("FINAL_PROJECT", "output","figures", "plot_adhd.pdf"))
        
 ```
 
