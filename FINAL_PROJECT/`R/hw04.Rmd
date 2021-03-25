@@ -18,13 +18,13 @@ library(readr)
 
 ```{r data, setup, include=FALSE}
 
-if( !dir.exists(here::here("FINAL_PROJECT","data"))) {
-  dir.create(here::here("FINAL_PROJECT","data"), recursive =TRUE)
+if (!dir.exists(here::here("FINAL_PROJECT", "data"))) {
+  dir.create(here::here("FINAL_PROJECT", "data"), recursive = TRUE)
 }
 
-adhd_data <- read_csv(here::here("FINAL_PROJECT","data","adhd.csv"),
-  na = c("", "NaN", "Inf", "-Inf", "NA"))
-
+adhd_data <- read_csv(here::here("FINAL_PROJECT", "data", "adhd.csv"),
+  na = c("", "NaN", "Inf", "-Inf", "NA")
+)
 ```
 
 # Summary
@@ -33,49 +33,45 @@ adhd_data <- read_csv(here::here("FINAL_PROJECT","data","adhd.csv"),
 
 adhd_data %>%
   group_by(Ethnicity, Measure, Score) %>%
-  summarise(across(c(Value),
-            list(
-              mean = ~mean(.x, na.rm = TRUE),
-              sd = ~sd(.x, na.rm = TRUE), 
-              min = ~min(.x, na.rm = TRUE),
-              max = ~max(.x, na.rm = TRUE)
-              
-            )))
-
+  summarise(across(
+    c(Value),
+    list(
+      mean = ~ mean(.x, na.rm = TRUE),
+      sd = ~ sd(.x, na.rm = TRUE),
+      min = ~ min(.x, na.rm = TRUE),
+      max = ~ max(.x, na.rm = TRUE)
+    )
+  ))
 ```
 
-
 # Plots 
-
 
 ```{r, practicing plots}
 
 plot_adhd <- adhd_data %>%
-  ggplot()+
-  aes(x = Ethnicity,
-      y = Value) +
-  geom_point(fill = "purple" , 
-             color = "purple", 
-             alpha = .5,
-             size = 2,
-             shape = 20) +
+  ggplot() +
+  aes(
+    x = Ethnicity,
+    y = Value
+  ) +
+  geom_point(
+    fill = "purple",
+    color = "purple",
+    alpha = .5,
+    size = 2,
+    shape = 20
+  ) +
+  # WDG: It's always a good idea to have a title for your plot. Try and answer the question: "What am I looking at?" - as well as be explicit with your axis.
   theme_minimal()
 
 plot_adhd
-
-
-
 ```
-
 
 # Output
 
-```{r, output }
+```{r, output}
 
-write_csv(adhd_data , here::here("FINAL_PROJECT", "data", "adhd_data" ))
+write_csv(adhd_data, here::here("FINAL_PROJECT", "data", "adhd_data"))
 
-ggsave(here::here("FINAL_PROJECT", "output","figures", "plot_adhd.pdf"))
-       
+ggsave(here::here("FINAL_PROJECT", "output", "figures", "plot_adhd.pdf"))
 ```
-
-
