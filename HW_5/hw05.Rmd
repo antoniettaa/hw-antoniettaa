@@ -68,6 +68,7 @@ What do they show about scented candles over the time period?
 
 ```{r}
 
+scented_plot <-
 scented_all %>%
   filter(Date > "2017-01-01") %>% 
   group_by(Date) %>%
@@ -80,13 +81,40 @@ scented_all %>%
        ) +
     geom_point(alpha = .3, 
                shape = 1,
-               color = "pink") +
+               color = "violet") +
     geom_smooth(method = "loess") +
     scale_x_date(name = "Date", 
                  date_breaks = "6 months", 
                  date_labels = "%m-%Y") +
-    geom_vline(xintercept = as.numeric(as.Date("2020-01-20")), linetype = "dashed")
-  
+    geom_vline(xintercept = as.numeric(as.Date("2020-01-20")), linetype = "dashed") +
+    scale_y_continuous(name = "Rating")+
+    ggtitle("Scented Candles Rating") +
+    theme_light()
+
+
+unscented_plot <-
+  unscented_all %>%
+  filter(Date > "2017-01-01") %>% 
+  group_by(Date) %>%
+  mutate(
+    avg_rating = mean(Rating)
+  ) %>%
+  ggplot() +
+    aes(x = as.Date(Date),
+        y = avg_rating
+       ) +
+    geom_point(alpha = .3, 
+               shape = 1,
+               color = "violet") +
+    geom_smooth(method = "loess") +
+    scale_x_date(name = "Date", 
+                 date_breaks = "6 months", 
+                 date_labels = "%m-%Y") +
+    geom_vline(xintercept = as.numeric(as.Date("2020-01-20")), linetype = "dashed") +
+    scale_y_continuous(name = "Rating") +
+    ggtitle("Unscented Candles Rating") +
+    theme_light()
+
 ```
 
 
@@ -97,13 +125,35 @@ Distinguish scented versus unscented candles using color, shape, and line type (
 
 ```{r combine datasets, eval=FALSE}
 candles_full <- bind_rows(
-	scented = candeles_scented, 
-	unscented = candeles_unscented, 
+	scented = scented_all, 
+	unscented = unscented_all, 
 	.id = "Scented"
 )
 ```
 
 ```{r}
+
+all_candles <-
+candles_full %>%
+  group_by(Candle_ID) %>%
+  filter(Date > "2017-01-01") %>% 
+  summarise(mu = mean(Rating)) %>%
+  ggplot()+
+    aes(x= as.Date(Date), 
+        y= mu, 
+        shape=as.factor(CandleID),
+        color=as.factor(CandleID),
+        fill= as.factor(CandleID)) + 
+    geom_point(alpha=.3, shape=1) +
+    geom_smooth(method = "loess") +
+    scale_x_date(name = "Date", 
+                 date_breaks = "6 months", 
+                 date_labels = "%m-%Y") +
+    geom_vline(xintercept = as.numeric(as.Date("2020-01-20")), linetype = "dashed") +
+    scale_y_continuous(name = "Rating") +
+    ggtitle("Scented & Unscented Candles Rating") +
+    theme_light()
+  
 
 ```
 
