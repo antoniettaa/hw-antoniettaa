@@ -2,7 +2,9 @@
 title: "Consequences of Covid-19 for Candle Critiques"
 author: "Your Name Here"
 date: "3/22/2021"
-output: html_document
+output:   
+  github_document: default
+  html_document: default
   theme: lumen
   highlight: haddock
   code_folding: hide
