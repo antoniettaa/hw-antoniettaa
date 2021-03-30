@@ -243,4 +243,4 @@ What pattern do you see?
 Is there a trend over time regarding smell-related reviews? 
 How does 2020 compare to 2019?
 
-The patterns
+The patterns show that the reviews for candles with scent have been more frequent than the reviews for candles showing no scent. After 2019, the reviews showing candles with no scent increased. 
