@@ -123,7 +123,7 @@ unscented_plot <-
 Combine the two datasets into one and make a plot similar to above, but showing both unscented and scented candles.
 Distinguish scented versus unscented candles using color, shape, and line type (for the trend lines).
 
-```{r combine datasets, eval=FALSE}
+```{r combine datasets, eval=TRUE}
 candles_full <- bind_rows(
 	scented = scented_all, 
 	unscented = unscented_all, 
@@ -135,15 +135,15 @@ candles_full <- bind_rows(
 
 all_candles <-
 candles_full %>%
-  group_by(Candle_ID) %>%
   filter(Date > "2017-01-01") %>% 
+  group_by(Scented, Date) %>%
   summarise(mu = mean(Rating)) %>%
   ggplot()+
     aes(x= as.Date(Date), 
         y= mu, 
-        shape=as.factor(CandleID),
-        color=as.factor(CandleID),
-        fill= as.factor(CandleID)) + 
+        shape=as.factor(Scented),
+        color=as.factor(Scented),
+        fill= as.factor(Scented)) + 
     geom_point(alpha=.3, shape=1) +
     geom_smooth(method = "loess") +
     scale_x_date(name = "Date", 
@@ -151,13 +151,17 @@ candles_full %>%
                  date_labels = "%m-%Y") +
     geom_vline(xintercept = as.numeric(as.Date("2020-01-20")), linetype = "dashed") +
     scale_y_continuous(name = "Rating") +
-    ggtitle("Scented & Unscented Candles Rating") +
-    theme_light()
+    scale_fill_discrete(name = "Type of Candle") +
+    ggtitle("Ratings for Scented & Unscented Candles") +
+    theme_light() 
   
+all_candles
 
 ```
 
 Which of these two sets of plots do you find easier to interpret?
+
+Interpreting the plots together was easier because you can better visualize the ratings drops between scented and unscented candles. It allows for better comparison of the averages differences across time.
 
 
 ## Part 3: Proportion of reviews mentioning "no scent"
@@ -198,12 +202,42 @@ str_no_scent <- function(x){
   	)
   )
 }
+
+scented_all$CodeReview <- str_no_scent(scented_all$Review)
+scented_all$CodeReview_2 <- factor(scented_all$CodeReview , labels = c("scent", "noscent"))
+
+print(scented_all)
+
 ```
 
 ```{r}
+
+new_scented <- 
+  scented_all %>%
+  filter(Date > "2019-01-01") %>%
+  mutate(month = lubridate:: floor_date(Date, "month")) %>%
+  mutate(review = str_no_scent(Review)) %>%
+  group_by(CodeReview_2, month) %>%
+  ggplot() +
+    aes(x = month ,
+        y = (..count..)/sum(..count..), 
+        fill = CodeReview_2 , 
+        color = month
+        ) +
+    geom_bar(position = "dodge") +
+  stat_summary(
+    aes(y = CodeReview_2), 
+        fun.data = mean_cl_normal) +
+      ggtitle("'No scent' Reviews Change Over Time") +
+      theme_light() 
+  
+new_scented
+  
 
 ```
 
 What pattern do you see?
 Is there a trend over time regarding smell-related reviews? 
 How does 2020 compare to 2019?
+
+The patterns
