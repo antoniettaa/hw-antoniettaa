@@ -31,15 +31,14 @@ Each dataset contains the following information for the Top 3 selling scented or
   4. `Review`: For the scented candles, the text of the review.
 
 ```{r setup, include=FALSE}
+
 library(dplyr)
 library(tidyverse)
 library(readxl)
 
 
 scented_all <- read_excel(here::here("HW_5/Scented_all.xlsx"))
-View(scented_all)
 unscented_all <- read_excel(here::here("HW_5/Unscented_all.xlsx"))
-View(unscented_all)
 ```
 
 
