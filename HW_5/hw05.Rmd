@@ -94,6 +94,7 @@ scented_all %>%
     ggtitle("Scented Candles Rating") +
     theme_light()
 
+scented_plot
 
 unscented_plot <-
   unscented_all %>%
@@ -117,6 +118,8 @@ unscented_plot <-
     scale_y_continuous(name = "Rating") +
     ggtitle("Unscented Candles Rating") +
     theme_light()
+
+unscented_plot
 
 ```
 
