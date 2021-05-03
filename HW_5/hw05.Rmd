@@ -37,6 +37,7 @@ Each dataset contains the following information for the Top 3 selling scented or
 library(dplyr)
 library(tidyverse)
 library(readxl)
+library(gridExtra)
 
 
 scented_all <- read_excel(here::here("HW_5/Scented_all.xlsx"))
@@ -209,8 +210,8 @@ str_no_scent <- function(x){
   )
 }
 
-scented_all$CodeReview <- str_no_scent(scented_all$Review)
-scented_all$CodeReview_2 <- factor(scented_all$CodeReview , labels = c("scent", "noscent"))
+scented_all$review <- str_no_scent(scented_all$Review)
+scented_all$review_2 <- factor(scented_all$CodeReview , labels = c("scent", "noscent"))
 
 print(scented_all)
 
@@ -223,21 +224,25 @@ new_scented <-
   filter(Date > "2019-01-01") %>%
   mutate(month = lubridate:: floor_date(Date, "month")) %>%
   mutate(review = str_no_scent(Review)) %>%
-  group_by(CodeReview_2, month) %>%
+  group_by(Review, month) %>%
   ggplot() +
     aes(x = month ,
         y = (..count..)/sum(..count..), 
-        fill = CodeReview_2 , 
+        fill = Review , 
         color = month
         ) +
-    geom_bar(position = "dodge") +
+    geom_bar(alpha = .5) +
   stat_summary(
-    aes(y = CodeReview_2), 
+    aes(y = Review), 
         fun.data = mean_cl_normal) +
+  scale_x_date(name = "Month and Year", date_labels = "%m-%Y", date_breaks = "month", expand = c(0,0)) +
+    scale_y_continuous(name = "Percentage of Reviews mentioning 'No Scent'") +
       ggtitle("'No scent' Reviews Change Over Time") +
       theme_light() 
   
 new_scented
+  
+  
   
 
 ```
