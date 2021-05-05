@@ -7,24 +7,58 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(ggdist)
 ```
 
-## R Markdown
+```{r data, setup, include=FALSE}
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+if (!dir.exists(here::here("FP", "data"))) {
+  dir.create(here::here("FP", "data"), recursive = TRUE)
+}
+covid_data <- read_csv(here::here("FP", "data", "prison_covid.csv"),
+                       na = c("", "NaN", "Inf", "-Inf", "NA"))
+pop_data <- read_csv(here::here("FP", "data", "prison_populations.csv"),
+                     na = c("", "NaN", "Inf", "-Inf", "NA"))
+staff_data <- read_csv(here::here("FP", "data", "staff_populations.csv"),
+                       na = c("", "NaN", "Inf", "-Inf", "NA"))
 ```
 
-## Including Plots
+For this project, I will only be looking at prisons COVID-19 rates for the state of New York; I will  be looking at the total prisoners cases, and deaths compared to recovery. I will also be looking at the total number of staffs' cases, which could have let to high number of prisoner's cases. 
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+ny_cases <- covid_data %>%
+  filter(name == "New York") %>%
+  select(total_prisoner_cases, total_prisoner_deaths, prisoners_recovered, total_staff_cases, as_of_date)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+ny_cases %>%
+  group_by(total_prisoner_cases, total_prisoner_deaths) %>%
+  summarise(across(c(total_staff_cases),
+    list(
+      mean = ~ mean(.x, na.rm = TRUE),
+      sd = ~ sd(.x, na.rm = TRUE),
+      min = ~ min(.x, na.rm = TRUE),
+      max = ~ max(.x, na.rm = TRUE))))
+```
+    
+
+```{r}
+ny_cases %>%
+  ggplot(aes(x = as_of_date,
+      y = total_prisoner_cases)) + 
+  geom_point(alpha= 5, 
+             shape= 20,
+             color="#C8A2C8",
+        fill= "#C8A2C8") +
+  geom_smooth(method = "loess") +
+  scale_y_continuous("Prisoners COVID-19 Cases") +
+  scale_x_discrete("Date") +
+  ggtitle("New York Prisoners' COVID-19 Cases") +
+  theme_light()
+
+ #theme(axis.text = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+```
+
