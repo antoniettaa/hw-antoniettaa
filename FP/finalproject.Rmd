@@ -53,7 +53,6 @@ ny_cases %>%
              shape= 20,
              color="#C8A2C8",
         fill= "#C8A2C8") +
-  geom_smooth(method = "loess") +
   scale_y_continuous("Prisoners COVID-19 Cases") +
   scale_x_discrete("Date") +
   ggtitle("New York Prisoners' COVID-19 Cases") +
@@ -62,3 +61,45 @@ ny_cases %>%
  #theme(axis.text = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
 ```
 
+```{r}
+ny_cases %>%
+  ggplot(aes(x = total_staff_cases,
+      y = total_prisoner_cases)) + 
+  geom_point(alpha= 5, 
+             shape= 20,
+             color="#C8A2C8",
+        fill= "#C8A2C8") +
+  geom_smooth(method = "loess") +
+  scale_y_continuous("Prisoners COVID-19 Cases") +
+  scale_x_discrete("Prison Staff COVID-19 Cases") +
+  ggtitle("New York Prisoners' COVID-19 Cases") +
+  theme_light()
+```
+```{r}
+ny_cases %>%
+  ggplot(aes(x = total_prisoner_cases,
+      y = prisoners_recovered)) + 
+  geom_point(alpha= 5, 
+             shape= 20,
+             color="#C8A2C8",
+        fill= "#C8A2C8") +
+  geom_smooth(method = "loess") +
+  scale_y_continuous("Prisoners COVID-19 Cases") +
+  scale_x_discrete("Prisoners Recovered") +
+  ggtitle("New York Prisoners' COVID-19 Cases") +
+  theme_light()
+```
+```{r}
+ny_cases %>%
+  ggplot(aes(x = total_prisoner_cases,
+      y = total_prisoner_deaths)) + 
+  geom_point(alpha= 5, 
+             shape= 20,
+             color="#C8A2C8",
+        fill= "#C8A2C8") +
+  geom_smooth(method = "loess") +
+  scale_y_continuous("Prisoners COVID-19 Cases") +
+  scale_x_discrete("Prisoners Death by COVID-19") +
+  ggtitle("New York Prisoners' COVID-19 Cases") +
+  theme_light()
+```
