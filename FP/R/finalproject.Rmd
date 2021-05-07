@@ -1,10 +1,15 @@
 ---
 title: "Final Project"
 author: "Antonietta"
-date: "5/3/2021"
+date: "`r format(Sys.Date(), '%b %d %Y')`"
 output: 
-  html_document: default
-  github_document: default
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    theme: cerulean
+    highlight: tango
 ---
 
 ```{r setup, include=FALSE}
