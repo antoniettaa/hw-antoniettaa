@@ -2,7 +2,9 @@
 title: "final_project"
 author: "Antonietta"
 date: "5/3/2021"
-output: html_document
+output: 
+  html_document: default
+  github_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -26,7 +28,8 @@ staff_data <- read_csv(here::here("FP", "data", "staff_populations.csv"),
 ```
 
 For this project, I will only be looking at prisons COVID-19 rates for the state of New York; I will  be looking at the total prisoners cases, and deaths compared to recovery. I will also be looking at the total number of staffs' cases, which could have let to high number of prisoner's cases. 
-
+ 
+We will be filtering the data set so that it includes only the variables of interest.
 ```{r}
 ny_cases <- covid_data %>%
   filter(name == "New York") %>%
@@ -46,7 +49,7 @@ ny_cases %>%
     
 
 ```{r}
-ny_cases %>%
+main_plot <- ny_cases %>%
   ggplot(aes(x = as_of_date,
       y = total_prisoner_cases)) + 
   geom_point(alpha= 5, 
@@ -62,7 +65,7 @@ ny_cases %>%
 ```
 
 ```{r}
-ny_cases %>%
+staff_prisonersplot <- ny_cases %>%
   ggplot(aes(x = total_staff_cases,
       y = total_prisoner_cases)) + 
   geom_point(alpha= 5, 
@@ -75,8 +78,9 @@ ny_cases %>%
   ggtitle("New York Prisoners' COVID-19 Cases") +
   theme_light()
 ```
+
 ```{r}
-ny_cases %>%
+prisoners_recoveryplot <- ny_cases %>%
   ggplot(aes(x = total_prisoner_cases,
       y = prisoners_recovered)) + 
   geom_point(alpha= 5, 
@@ -89,8 +93,10 @@ ny_cases %>%
   ggtitle("New York Prisoners' COVID-19 Cases") +
   theme_light()
 ```
+
+
 ```{r}
-ny_cases %>%
+prisoners_deathplot <- ny_cases %>%
   ggplot(aes(x = total_prisoner_cases,
       y = total_prisoner_deaths)) + 
   geom_point(alpha= 5, 
@@ -103,3 +109,22 @@ ny_cases %>%
   ggtitle("New York Prisoners' COVID-19 Cases") +
   theme_light()
 ```
+
+```{r}
+practicing <- ny_cases %>%
+  ggplot(aes(x = as_of_date,
+      y = total_prisoner_deaths)) + 
+  geom_point(alpha= 5, 
+             shape= 20,
+             color="#C8A2C8",
+        fill= "#C8A2C8") +
+  geom_smooth(method = "loess") +
+  scale_y_continuous("Prisoners COVID-19 Cases") +
+   scale_x_date(name = "Date", 
+                 date_breaks = "6 months", 
+                 date_labels = "%m-%Y") +
+  ggtitle("New York Prisoners' COVID-19 Cases") +
+  theme_light()
+```
+
+
