@@ -127,7 +127,6 @@ prisoners_deathplot <- ny_cases %>%
              shape= 20,
              color="#C8A2C8",
         fill= "#C8A2C8") +
-  geom_smooth(method = "loess") +
   scale_y_continuous("Prisoners COVID-19 Cases") +
   scale_x_discrete("Prisoners Death by COVID-19") +
   ggtitle("New York Prisoners' COVID-19 Cases") +
@@ -135,3 +134,5 @@ prisoners_deathplot <- ny_cases %>%
 
 prisoners_deathplot
 ```
+
+# The number of prisoner's COVID-19 cases increased as the number of prison staff cases went up, from which it can be assumed that the staff contributed in a major way to the infection within the prisons. Likewise, the data shows that as time passed, prisoner's recovery began increasing higher than the cases of COVID-19. Finally, prisoner's deaths increased as covid cases increased.
